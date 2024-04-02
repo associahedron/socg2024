@@ -15,7 +15,7 @@
 
 \category{Media Exposition}
 
-\title{Visualizing Lucas's Hamiltonian Paths Through The Convex Edge-Flip Graph}
+\title{Visualizing Lucas's Hamiltonian Paths Through The Associahedron 1-Skeleton}
 
 \author{Kacey Thien-Huu La}{Ursinus College Mathematics And Computer Science, Collegeville, PA, USA }{}{}{}
 \author{Jose E. Arbelo}{Ursinus College Mathematics And Computer Science, Collegeville, PA, USA }{}{}{}
@@ -43,7 +43,7 @@ We re-examine the 1987 paper by Joan Lucas\cite{lucas1987rotation}, who showed t
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{a4.pdf}
-    \caption{The flip graph is the 1-skeleton of the associahedron.  Edges are between triangulations that differ by a single ede flip.  In the above, a Hamiltonian path (pink) is shown through all hexagon triangulations in $K_4$, a 3D polytope. We superimpose Lucas's codewords on each triangulation.}
+    \caption{The flip graph is the 1-skeleton of the associahedron.  Edges are between triangulations that differ by a single edge flip.  In the above, a Hamiltonian path (pink) is shown through all hexagon triangulations in $K_4$, a 3D polytope. We superimpose Lucas's codewords on each triangulation.}
     \label{fig:associahedron}
 \end{figure}
 
@@ -58,9 +58,7 @@ We re-examine the 1987 paper by Joan Lucas\cite{lucas1987rotation}, who showed t
 
 \section{Convex Flip Graphs}
 
-A \textbf{flip graph} for the triangulation of a particular polygon has a vertex for each possible triangulation, and an edge between two vertices if their corresponding triangulations differ by a single \textbf{quadrilateral edge flip}.  In the special case of convex polygon with $n+2$ vertices, the flip graph can be realized as the 1-skeleton of a convex polytope known as the \textbf{associahedron $K_n$} (Figure~\ref{fig:associahedron}).  This polytope has ``Catalan number'' $C_n = \frac{1}{n+1} \binom{2n}{n}$ vertices, each of whose $i^{\text{th}}$ coordinate in $\mathbb{R}^{n+2}$ is the total area of all triangles adjecent to vertex $i$ \footnote{Though this embedding is in $n+2$ dimensions, the geometry can be embedded in $n-1$ dimensions.}.
-
-Furthermore, since there is a bijection between the triangulations and all possible rooted binary search trees with $n$ internal nodes and $n+1$ leaf nodes, the flip graph is also called the ``rotation graph''  \cite{lucas1987rotation} (Figure~\ref{fig:correspondences}).  In this context, an edge in $K_n$ corresponds to a single {\bf tree rotation}.  Thus, a Hamiltonian path through this structure also gives a way to traverse all possible binary trees with $n$ internal nodes via a single tree rotation at each step.
+A \textbf{flip graph} for the triangulation of a particular polygon has a vertex for each possible triangulation, and an edge between two vertices if their corresponding triangulations differ by a single \textbf{quadrilateral edge flip}.  In the special case of convex polygon with $n+2$ vertices and a designated top edge, the flip graph can be realized as the 1-skeleton of a convex polytope known as the \textbf{associahedron $K_n$} (Figure~\ref{fig:associahedron}).  This polytope has ``Catalan number'' $C_n = \frac{1}{n+1} \binom{2n}{n}$ vertices, each of whose $i^{\text{th}}$ coordinate in $\mathbb{R}^{n+2}$ is the total area of all triangles adjacent to vertex $i$ \footnote{Though this is in $n+2$ dimensions, the geometry can be isometrically embedded in $n-1$ dimensions.}.  Since there is a bijection between the triangulations and all possible rooted binary search trees with $n$ internal nodes and $n+1$ leaf nodes, the flip graph is also called the ``rotation graph''  \cite{lucas1987rotation}.  In this context, an edge in $K_n$ corresponds to a single {\bf tree rotation} (Figure~\ref{fig:correspondences}).  Among many other ``Catalan bijections'' \cite{roman2015introduction}, there is also a bijection with all balanced parentheses on $n+1$ items, where an edge is a single re-association.
 
 \section{Enumerating And Visualizing A Hamiltonian Path}
 
@@ -72,7 +70,7 @@ Furthermore, since there is a bijection between the triangulations and all possi
     \label{fig:construct}
 \end{figure}
 
-Remarkably, as Joan Lucas shows in her 1987 paper \cite{lucas1987rotation}, the flip graph is Hamiltonian.  To show this, she uses \textbf{codeword encodings} of triangulations introduced by Zerling \cite{zerling1985generating} to design an $O(C_n)$ time algorithm for enumerating Hamiltonian paths and cycles.  Specifically, the $i^{\text{th}}$ entry of a codeword $w$ counts the number of internal edges incident on vertex $i$ that connect to a vertex with a greater index, where $w[0]$ corresponds to the left of the top edge.  As such, each internal edge contributes to exactly one entry.  As Lucas proves \cite{lucas1987rotation}, a codeword is a valid representation of a convex polygon triangulation if and only if:
+Remarkably, as Joan Lucas shows in her 1987 paper \cite{lucas1987rotation}, the flip graph is Hamiltonian.  To show this, she uses \textbf{codeword encodings} of triangulations introduced by Zerling \cite{zerling1985generating} to design an $O(C_n)$ time algorithm for enumerating Hamiltonian paths and cycles.  Specifically, the $i^{\text{th}}$ entry of a codeword $w$ counts the number of internal edges incident on vertex $i$ that connect to a vertex with a greater index, where $w[0]$ corresponds to the left of the top edge.  As such, each internal edge contributes to exactly one entry.  As Lucas proves \cite{lucas1987rotation}, a codeword is a \textbf{valid codeword} of a convex polygon triangulation if and only if:
 \begin{equation}
     \label{eq:valid1}
     \sum_{i=0}^{n-1} w[i] = n-1
@@ -102,7 +100,7 @@ A necessary condition for a single edge flip between codewords $w_1$ and $w_2$ i
     w_1[a] = w_2[b] \pm 1, w_2[b] = w_1[a] \mp 1, a < b \text{, and }  w_1[k] = w_2[k], k \notin \{a, b\}
 \end{equation}
 
-Intuitively, the vertices at indices $a, b$ are the base of a quadrilateral where an edge flip happens, and they exchange exactly one edge.  However, this is not sufficient; the quad should also be free of other internal edges, and the polygonal region below $ab$ should be fully triangulated.  Formally, the following two additional conditions are sufficient (\cite{lucas1987rotation} lemma 2):
+Intuitively, the vertices at indices $a, b$ are the base of a quadrilateral where an edge flip happens, and they exchange exactly one edge.  However, this is not sufficient; the quad should also be free of other internal edges, and the polygonal region below $ab$ should be fully triangulated.  Formally, the following two additional conditions are sufficient (\cite{lucas1987rotation} Lemma 2):
 
 \begin{equation}
     \label{eq:rot2}
@@ -116,14 +114,16 @@ Intuitively, the vertices at indices $a, b$ are the base of a quadrilateral wher
 
 The first Kronecker $\delta$ case accounts for an edge flip moving a diagonal out of $a$, and the second $\delta$ accounts for the top boundary edge which may be edge $ad$ of the quad $abcd$.
 
+
+
+A codeword $w$ is in {\bf $d$-extreme}, $1 \leq d \leq n-1$, if $w[i] = 0$ or $w[i] = n-i-\sum_{k=i+1}^{n-1} w[k]$ for all $1 \leq i \leq d$.  Lucas proves that if an edge flip is possible using index $d+1$ in a $d$-extreme codeword $w_1$, then the resulting codeword $w_2$ is also $d$-extreme (Figure~\ref{fig:extreme}, Lemma 3 in \cite{lucas1987rotation}).
+
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{Extreme.pdf}
     \caption{A $d$-extreme codeword remains $d$-extreme after an edge flip involving index $d+1$.}
     \label{fig:extreme}
 \end{figure}
-
-A codeword $w$ is in {\bf $d$-extreme}, $1 \leq d \leq n-1$, if $w[i] = 0$ or $w[i] = n-i-\sum_{k=i+1}^{n-1} w[k]$ for all $1 \leq i \leq d$.  Lucas proves that if an edge flip is possible using index $d+1$ in a $d$-extreme codeword $w_1$, then the resulting codeword $w_2$ is also $d$-extreme (Figure~\ref{fig:extreme}, lemma 3 in \cite{lucas1987rotation}).
 
 
 Finally, Lucas defines a {\bf $d$-dimensional stack} as the set of valid codewords that share the last $n-d-1$ entries.  ``Dimension'' is apt here, as such a codeword has $d$ degrees of freedom; there are $d+1$ unspecified entries, but $w[0]$ is linearly dependent on the rest given Equation~\ref{eq:valid1}.  Furthermore, define the {\bf height $h$ of a stack} as the number of possible entries $w[d]$ can take on in a particular $d$-dimensional stack $S$.  Based on Equation~\ref{eq:valid2}, this is
@@ -156,9 +156,11 @@ def print_hamiltonian(n): # Print a Hamiltonian traversal of Kn
     \label{fig:algorithm}
 \end{figure}
 
-We now sketch Lucas's inductive proof that a Hamiltonian path exists through any stack $S$ (theorem 1 in \cite{lucas1987rotation}): {\em given a $d$-extreme codeword $w_s$ in a $d$-dimensional stack, there exists a Hamiltonian path through the stack starting at $w_s$ and ending on a $d$-extreme codeword $w_t$}. The base case is $d=1$, where there are exactly $h$ codewords in $S$ that, when arranged in order of $w[1]$, have adjacent pairs differ by exactly one edge flip (a path in $K_n$), with $1$-extreme codewords at the beginning and end with $w_s[1] = 0$, $w_t[1] = h-1$.  Now consider a stack $S$ with $d > 1$.  Partition $S$ into $h$ {\bf substacks} $\{S(i) = \{w \in S | w[d] = i\} \}_{i=0}^{h-1}$, and arrange them in order by $i$.  Let $S(0)$ start on $w_s$, which is $d$-extreme, so it is also $d-1$-extreme, and so, by the inductive hypothesis, a Hamiltonian path exists through $S(0)$ ending on a $d-1$-extreme node $w_{t0}$.  One can show that $w_{t0}$ connects to an extreme codeword $w_{s1}$ in $S(1)$ \cite{lucas1987rotation}.  Start at $w_{s1}$ in $S(1)$ and repeat this process to chain together Hamiltonian paths through all of the substacks, ending on $w_t$ in $S(h-1)$, which is a Hamiltonian path through all of $S$.  Moreover, since $w_s$ and $w_t$ are $d-1$-extreme,  and $w_s[d] = 0$ and $w_t[d] = h-1$, they are $d$-extreme $\square$.
+Lucas shows by induction that, given a $d$-extreme codeword $w$ in a stack $S$ of height $h$, it's possible to find a Hamiltonian path through $S$ that starts on $w$ and ends on another $d$-extreme codeword (Theorem 1 in \cite{lucas1987rotation}). The base case $d=1$ is trivial, as it is a simple 1D path.  For $d > 1$, one can partition $S$ into $h$ {\bf substacks} $\{S(i) = \{w \in S | w[d] = i\} \}_{i=0}^{h-1}$.  Assuming by induction that each substack begins and ends on a $d-1$-extreme codeword, arrange the substacks in either ascending or descending order by $i$ to assemble them into a Hamiltonian path through all of $S$.  To ensure that the boundary of adjacent substacks differ by a single edge flip, \textbf{assemble adjacent substacks in reverse order of each other}.  
 
-This theorem can be used inductively to assemble an $n-1$ dimensional stack of height $2$ in Hamiltonian order, which contains all vertices of $K_n$.  Figure~\ref{fig:algorithm} shows a complete implementation in 16 lines of pure python, which is slightly simpler than Lucas's provided code.  The key trick is to reverse adjacent stacks of the same dimension to ensure that the $d-1$-extreme codewords that connect their boundaries are the ones that differ by exactly one flip.  Figure~\ref{fig:stacks} provides more intuition via several example stacks.  We also provide a Javascript web app using d3 \cite{bostock2011d3} to animate the Hamiltonian path one step at a time.
+The above can be used to construct a Hamiltonian path through the entire edge flip graph, which is an $n-1$ dimensional stack of height $2$, starting on the codeword $w = [n-1, 0, ..., 0]$.  We show a complete implementation as recursive python code in Figure~\ref{fig:algorithm}, which is slightly simpler than Lucas's provided code.  Figure~\ref{fig:stacks} shows this assembly visually for $n=2,3,4$, where substacks that are presented in reverse order by $i$ are highlighted in gray.  We believe it is easier to visualize the Hamiltonian path unraveled in this way than it is to superimpose it on the associahedron itself (as in Figure~\ref{fig:associahedron}), particularly in higher dimensions.  To help make this even clearer, we also provide a Javascript web app using d3 \cite{bostock2011d3} to animate the Hamiltonian path one step at a time, which we trace through the substacks.
+
+
 
 \begin{figure}
     \centering
